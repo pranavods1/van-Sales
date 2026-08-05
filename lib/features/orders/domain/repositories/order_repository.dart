@@ -1,4 +1,5 @@
 import '../../data/models/cart_item_model.dart';
+import '../../data/models/invoice_model.dart';
 import '../../../customers/data/models/customer_model.dart';
 
 abstract class OrderRepository {
@@ -11,4 +12,6 @@ abstract class OrderRepository {
     required double discount,
     required String remarks,
   });
+
+  Future<List<InvoiceModel>> getInvoices();
 }

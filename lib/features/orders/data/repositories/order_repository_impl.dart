@@ -4,6 +4,7 @@ import '../../../../core/network/api_client.dart';
 import '../../domain/repositories/order_repository.dart';
 
 import '../models/cart_item_model.dart';
+import '../models/invoice_model.dart';
 import '../../../customers/data/models/customer_model.dart';
 
 class OrderRepositoryImpl implements OrderRepository {
@@ -68,6 +69,36 @@ class OrderRepositoryImpl implements OrderRepository {
         }
       }
       throw Exception(e.message ?? 'Failed to submit order');
+    }
+  }
+
+  @override
+  Future<List<InvoiceModel>> getInvoices() async {
+    try {
+      final prefs = await SharedPreferences.getInstance();
+      final storeId = prefs.getInt('store_id') ?? 0;
+      final userId = prefs.getInt('user_id') ?? 0;
+      final vanId = prefs.getInt('van_id') ?? 0;
+
+      final response = await _apiClient.dio.get(
+        '/vansale.index',
+        queryParameters: {
+          'store_id': storeId,
+          'user_id': userId,
+          'van_id': vanId,
+        },
+      );
+      
+      if (response.statusCode == 200 && response.data != null) {
+        final data = response.data['data'];
+        if (data != null && data['data'] != null) {
+          final List<dynamic> invoiceList = data['data'];
+          return invoiceList.map((json) => InvoiceModel.fromJson(json)).toList();
+        }
+      }
+      return [];
+    } catch (e) {
+      throw Exception('Failed to fetch invoices: $e');
     }
   }
 }

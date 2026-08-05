@@ -132,7 +132,7 @@ class _DashboardScreenState extends ConsumerState<DashboardScreen> {
                       icon: Icons.receipt_long_rounded,
                       color: Colors.purple,
                       onTap: () {
-                        SnackbarUtils.showSuccess(context, 'Invoices List Coming Soon!');
+                        context.router.push(const InvoiceListRoute());
                       },
                     ),
                   ],

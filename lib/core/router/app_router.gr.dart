@@ -1,8 +1,17 @@
+// dart format width=80
+// GENERATED CODE - DO NOT MODIFY BY HAND
 
+// **************************************************************************
+// AutoRouterGenerator
+// **************************************************************************
 
+// ignore_for_file: type=lint
+// coverage:ignore-file
 
 part of 'app_router.dart';
 
+/// generated route for
+/// [CheckoutScreen]
 class CheckoutRoute extends PageRouteInfo<void> {
   const CheckoutRoute({List<PageRouteInfo>? children})
     : super(CheckoutRoute.name, initialChildren: children);
@@ -17,6 +26,8 @@ class CheckoutRoute extends PageRouteInfo<void> {
   );
 }
 
+/// generated route for
+/// [CustomerListScreen]
 class CustomerListRoute extends PageRouteInfo<CustomerListRouteArgs> {
   CustomerListRoute({
     Key? key,
@@ -70,6 +81,8 @@ class CustomerListRouteArgs {
   int get hashCode => key.hashCode ^ isSelectionMode.hashCode;
 }
 
+/// generated route for
+/// [DashboardScreen]
 class DashboardRoute extends PageRouteInfo<void> {
   const DashboardRoute({List<PageRouteInfo>? children})
     : super(DashboardRoute.name, initialChildren: children);
@@ -84,6 +97,24 @@ class DashboardRoute extends PageRouteInfo<void> {
   );
 }
 
+/// generated route for
+/// [InvoiceListScreen]
+class InvoiceListRoute extends PageRouteInfo<void> {
+  const InvoiceListRoute({List<PageRouteInfo>? children})
+    : super(InvoiceListRoute.name, initialChildren: children);
+
+  static const String name = 'InvoiceListRoute';
+
+  static PageInfo page = PageInfo(
+    name,
+    builder: (data) {
+      return const InvoiceListScreen();
+    },
+  );
+}
+
+/// generated route for
+/// [LoginScreen]
 class LoginRoute extends PageRouteInfo<void> {
   const LoginRoute({List<PageRouteInfo>? children})
     : super(LoginRoute.name, initialChildren: children);
@@ -98,6 +129,8 @@ class LoginRoute extends PageRouteInfo<void> {
   );
 }
 
+/// generated route for
+/// [ProductDetailScreen]
 class ProductDetailRoute extends PageRouteInfo<ProductDetailRouteArgs> {
   ProductDetailRoute({
     Key? key,
@@ -143,6 +176,8 @@ class ProductDetailRouteArgs {
   int get hashCode => key.hashCode ^ product.hashCode;
 }
 
+/// generated route for
+/// [ProductListScreen]
 class ProductListRoute extends PageRouteInfo<void> {
   const ProductListRoute({List<PageRouteInfo>? children})
     : super(ProductListRoute.name, initialChildren: children);
@@ -157,6 +192,8 @@ class ProductListRoute extends PageRouteInfo<void> {
   );
 }
 
+/// generated route for
+/// [SplashScreen]
 class SplashRoute extends PageRouteInfo<void> {
   const SplashRoute({List<PageRouteInfo>? children})
     : super(SplashRoute.name, initialChildren: children);
