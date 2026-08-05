@@ -94,7 +94,12 @@ class _CheckoutScreenState extends ConsumerState<CheckoutScreen> {
 
     if (items.isEmpty) {
       return Scaffold(
-        appBar: AppBar(title: const Text('Checkout')),
+        appBar: AppBar(
+          title: const Text('Checkout', style: TextStyle(fontWeight: FontWeight.bold, color: Colors.black87)),
+          backgroundColor: Colors.amber.shade700,
+          foregroundColor: Colors.black87,
+          iconTheme: const IconThemeData(color: Colors.black87),
+        ),
         body: const Center(
           child: Text('Your cart is empty', style: TextStyle(fontSize: 18, color: Colors.grey)),
         ),
@@ -105,9 +110,10 @@ class _CheckoutScreenState extends ConsumerState<CheckoutScreen> {
 
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Checkout', style: TextStyle(fontWeight: FontWeight.bold)),
-        backgroundColor: Colors.blue,
-        foregroundColor: Colors.white,
+        title: const Text('Checkout', style: TextStyle(fontWeight: FontWeight.bold, color: Colors.black87)),
+        backgroundColor: Colors.amber.shade700,
+        foregroundColor: Colors.black87,
+        iconTheme: const IconThemeData(color: Colors.black87),
       ),
       backgroundColor: Colors.grey[100],
       body: SingleChildScrollView(
@@ -123,8 +129,8 @@ class _CheckoutScreenState extends ConsumerState<CheckoutScreen> {
                   child: Row(
                     children: [
                       CircleAvatar(
-                        backgroundColor: Colors.blue.withValues(alpha: 0.1),
-                        child: const Icon(Icons.person, color: Colors.blue),
+                        backgroundColor: Colors.amber.withValues(alpha: 0.1),
+                        child: Icon(Icons.person, color: Colors.amber.shade700),
                       ),
                       const SizedBox(width: 16),
                       Expanded(
@@ -282,8 +288,8 @@ class _CheckoutScreenState extends ConsumerState<CheckoutScreen> {
             child: ElevatedButton(
               onPressed: _isSubmitting ? null : _submitOrder,
               style: ElevatedButton.styleFrom(
-                backgroundColor: Colors.green,
-                foregroundColor: Colors.white,
+                backgroundColor: Colors.amber.shade700,
+                foregroundColor: Colors.black87,
                 shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
               ),
               child: _isSubmitting
@@ -292,7 +298,7 @@ class _CheckoutScreenState extends ConsumerState<CheckoutScreen> {
                       height: 24,
                       child: CircularProgressIndicator(color: Colors.white, strokeWidth: 2),
                     )
-                  : const Text('SUBMIT INVOICE', style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold)),
+                  : const Text('SUBMIT INVOICE', style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold, color: Colors.black87)),
             ),
           ),
         ),

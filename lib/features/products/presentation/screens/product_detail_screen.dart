@@ -73,9 +73,10 @@ class _ProductDetailScreenState extends ConsumerState<ProductDetailScreen> {
 
     return Scaffold(
       appBar: AppBar(
-        title: Text(widget.product.name, style: const TextStyle(fontWeight: FontWeight.bold)),
-        backgroundColor: Colors.blue,
-        foregroundColor: Colors.white,
+        title: Text(widget.product.name, style: const TextStyle(fontWeight: FontWeight.bold, color: Colors.black87)),
+        backgroundColor: Colors.amber.shade700,
+        foregroundColor: Colors.black87,
+        iconTheme: const IconThemeData(color: Colors.black87),
       ),
       backgroundColor: Colors.grey[100],
       body: SingleChildScrollView(
@@ -91,10 +92,10 @@ class _ProductDetailScreenState extends ConsumerState<ProductDetailScreen> {
                     height: 80,
                     width: 80,
                     decoration: BoxDecoration(
-                      color: Colors.blue.withValues(alpha: 0.1),
+                      color: Colors.amber.withValues(alpha: 0.1),
                       borderRadius: BorderRadius.circular(16),
                     ),
-                    child: const Icon(Icons.inventory_2, color: Colors.blue, size: 40),
+                    child: Icon(Icons.inventory_2, color: Colors.amber.shade700, size: 40),
                   ),
                   const SizedBox(width: 20),
                   Expanded(
@@ -112,9 +113,9 @@ class _ProductDetailScreenState extends ConsumerState<ProductDetailScreen> {
                         const SizedBox(height: 8),
                         Text(
                           'Base Price: ₹${widget.product.price}',
-                          style: const TextStyle(
+                          style: TextStyle(
                             fontSize: 16,
-                            color: Colors.blue,
+                            color: Colors.amber.shade700,
                             fontWeight: FontWeight.bold,
                           ),
                         ),
@@ -238,7 +239,7 @@ class _ProductDetailScreenState extends ConsumerState<ProductDetailScreen> {
                                       Text(
                                         'Price: ₹${detail.price}',
                                         style: const TextStyle(
-                                          color: Colors.green,
+                                          color: Colors.black87,
                                           fontWeight: FontWeight.bold,
                                         ),
                                       ),
@@ -306,20 +307,14 @@ class _ProductDetailScreenState extends ConsumerState<ProductDetailScreen> {
                   width: double.infinity,
                   height: 50,
                   child: detailState.maybeWhen(
-                    data: (details) => ElevatedButton.icon(
+                    data: (details) => ElevatedButton(
                       onPressed: () => _addAllToCart(details),
-                      icon: const Icon(Icons.shopping_cart),
-                      label: const Text(
-                        'Add to Cart',
-                        style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
-                      ),
                       style: ElevatedButton.styleFrom(
-                        backgroundColor: Colors.blue,
-                        foregroundColor: Colors.white,
-                        shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(12),
-                        ),
+                        backgroundColor: Colors.amber.shade700,
+                        foregroundColor: Colors.black87,
+                        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
                       ),
+                      child: const Text('Add to Cart', style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold, color: Colors.black87)),
                     ),
                     orElse: () => const SizedBox(),
                   ),

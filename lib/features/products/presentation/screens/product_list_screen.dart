@@ -30,9 +30,10 @@ class _ProductListScreenState extends ConsumerState<ProductListScreen> {
 
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Products', style: TextStyle(fontWeight: FontWeight.bold)),
-        backgroundColor: Colors.blue,
-        foregroundColor: Colors.white,
+        title: const Text('Products', style: TextStyle(fontWeight: FontWeight.bold, color: Colors.black87)),
+        backgroundColor: Colors.amber.shade700,
+        foregroundColor: Colors.black87,
+        iconTheme: const IconThemeData(color: Colors.black87),
       ),
       backgroundColor: Colors.grey[50],
       body: productState.when(
@@ -58,7 +59,7 @@ class _ProductListScreenState extends ConsumerState<ProductListScreen> {
                 child: Card(
                   elevation: 3,
                   margin: const EdgeInsets.only(bottom: 16),
-                  shadowColor: Colors.blue.withValues(alpha: 0.1),
+                  shadowColor: Colors.amber.withValues(alpha: 0.1),
                   shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
                   child: Padding(
                     padding: const EdgeInsets.all(16.0),
@@ -72,10 +73,10 @@ class _ProductListScreenState extends ConsumerState<ProductListScreen> {
                             height: 60,
                             width: 60,
                             decoration: BoxDecoration(
-                              color: Colors.blue.withValues(alpha: 0.1),
+                              color: Colors.amber.withValues(alpha: 0.1),
                               borderRadius: BorderRadius.circular(12),
                             ),
-                            child: const Icon(Icons.inventory_2, color: Colors.blue, size: 30),
+                            child: Icon(Icons.inventory_2, color: Colors.amber.shade700, size: 30),
                           ),
                           const SizedBox(width: 16),
                           Expanded(
@@ -97,8 +98,8 @@ class _ProductListScreenState extends ConsumerState<ProductListScreen> {
                                     const SizedBox(width: 4),
                                     Text(
                                       'Price: ₹${product.price}',
-                                      style: const TextStyle(
-                                        color: Colors.blue,
+                                      style:  TextStyle(
+                                        color: Colors.amber.shade700,
                                         fontWeight: FontWeight.w600,
                                       ),
                                     ),
@@ -137,7 +138,7 @@ class _ProductListScreenState extends ConsumerState<ProductListScreen> {
                             padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
                             decoration: BoxDecoration(
                               color: Colors.white,
-                              border: Border.all(color: Colors.blue.withValues(alpha: 0.3)),
+                              border: Border.all(color: Colors.amber.shade700.withValues(alpha: 0.3)),
                               borderRadius: BorderRadius.circular(20),
                             ),
                             child: Row(
@@ -155,7 +156,7 @@ class _ProductListScreenState extends ConsumerState<ProductListScreen> {
                                 Text(
                                   '₹${double.tryParse(unit.price)?.toStringAsFixed(2) ?? unit.price}',
                                   style: const TextStyle(
-                                    color: Colors.green,
+                                    color: Colors.black87,
                                     fontWeight: FontWeight.bold,
                                     fontSize: 12,
                                   ),

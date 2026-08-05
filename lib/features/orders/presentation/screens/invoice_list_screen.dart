@@ -13,9 +13,10 @@ class InvoiceListScreen extends ConsumerWidget {
 
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Invoices', style: TextStyle(fontWeight: FontWeight.bold)),
-        backgroundColor: Colors.purple,
-        foregroundColor: Colors.white,
+        title: const Text('Invoices', style: TextStyle(fontWeight: FontWeight.bold, color: Colors.black87)),
+        backgroundColor: Colors.amber.shade700,
+        foregroundColor: Colors.black87,
+        iconTheme: const IconThemeData(color: Colors.black87),
       ),
       backgroundColor: Colors.grey[100],
       body: RefreshIndicator(
@@ -95,7 +96,7 @@ class InvoiceListScreen extends ConsumerWidget {
                             const Text('Grand Total:', style: TextStyle(color: Colors.grey)),
                             Text(
                               '₹${invoice.grandTotal.toStringAsFixed(2)}',
-                              style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 18, color: Colors.purple),
+                              style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 18, color: Colors.black87),
                             ),
                           ],
                         ),

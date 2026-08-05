@@ -33,9 +33,10 @@ class _CustomerListScreenState extends ConsumerState<CustomerListScreen> {
 
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Customers', style: TextStyle(fontWeight: FontWeight.bold)),
-        backgroundColor: Colors.blue,
-        foregroundColor: Colors.white,
+        title: const Text('Customers', style: TextStyle(fontWeight: FontWeight.bold, color: Colors.black87)),
+        backgroundColor: Colors.amber.shade700,
+        foregroundColor: Colors.black87,
+        iconTheme: const IconThemeData(color: Colors.black87),
       ),
       body: customerState.when(
         data: (customers) {
@@ -66,9 +67,9 @@ class _CustomerListScreenState extends ConsumerState<CustomerListScreen> {
                   },
                   contentPadding: const EdgeInsets.all(16),
                   leading: CircleAvatar(
-                    backgroundColor: Colors.blue.withOpacity(0.1),
+                    backgroundColor: Colors.amber.withValues(alpha: 0.1),
                     radius: 25,
-                    child: const Icon(Icons.person, color: Colors.blue),
+                    child: Icon(Icons.person, color: Colors.amber.shade700),
                   ),
                   title: Text(
                     customer.name,
