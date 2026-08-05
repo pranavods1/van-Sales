@@ -11,19 +11,74 @@
 part of 'app_router.dart';
 
 /// generated route for
+/// [CheckoutScreen]
+class CheckoutRoute extends PageRouteInfo<void> {
+  const CheckoutRoute({List<PageRouteInfo>? children})
+    : super(CheckoutRoute.name, initialChildren: children);
+
+  static const String name = 'CheckoutRoute';
+
+  static PageInfo page = PageInfo(
+    name,
+    builder: (data) {
+      return const CheckoutScreen();
+    },
+  );
+}
+
+/// generated route for
 /// [CustomerListScreen]
-class CustomerListRoute extends PageRouteInfo<void> {
-  const CustomerListRoute({List<PageRouteInfo>? children})
-    : super(CustomerListRoute.name, initialChildren: children);
+class CustomerListRoute extends PageRouteInfo<CustomerListRouteArgs> {
+  CustomerListRoute({
+    Key? key,
+    bool isSelectionMode = false,
+    List<PageRouteInfo>? children,
+  }) : super(
+         CustomerListRoute.name,
+         args: CustomerListRouteArgs(
+           key: key,
+           isSelectionMode: isSelectionMode,
+         ),
+         initialChildren: children,
+       );
 
   static const String name = 'CustomerListRoute';
 
   static PageInfo page = PageInfo(
     name,
     builder: (data) {
-      return const CustomerListScreen();
+      final args = data.argsAs<CustomerListRouteArgs>(
+        orElse: () => const CustomerListRouteArgs(),
+      );
+      return CustomerListScreen(
+        key: args.key,
+        isSelectionMode: args.isSelectionMode,
+      );
     },
   );
+}
+
+class CustomerListRouteArgs {
+  const CustomerListRouteArgs({this.key, this.isSelectionMode = false});
+
+  final Key? key;
+
+  final bool isSelectionMode;
+
+  @override
+  String toString() {
+    return 'CustomerListRouteArgs{key: $key, isSelectionMode: $isSelectionMode}';
+  }
+
+  @override
+  bool operator ==(Object other) {
+    if (identical(this, other)) return true;
+    if (other is! CustomerListRouteArgs) return false;
+    return key == other.key && isSelectionMode == other.isSelectionMode;
+  }
+
+  @override
+  int get hashCode => key.hashCode ^ isSelectionMode.hashCode;
 }
 
 /// generated route for

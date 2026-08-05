@@ -1,11 +1,18 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:auto_route/auto_route.dart';
+import '../../../../core/router/app_router.dart';
 import '../providers/customer_provider.dart';
+import '../../../orders/presentation/providers/cart_provider.dart';
 
 @RoutePage()
 class CustomerListScreen extends ConsumerStatefulWidget {
-  const CustomerListScreen({super.key});
+  final bool isSelectionMode;
+  
+  const CustomerListScreen({
+    super.key,
+    this.isSelectionMode = false,
+  });
 
   @override
   ConsumerState<CustomerListScreen> createState() => _CustomerListScreenState();
@@ -52,6 +59,12 @@ class _CustomerListScreenState extends ConsumerState<CustomerListScreen> {
                 margin: const EdgeInsets.only(bottom: 16),
                 shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
                 child: ListTile(
+                  onTap: () {
+                    if (widget.isSelectionMode) {
+                      ref.read(cartProvider.notifier).setCustomer(customer);
+                      context.router.push(const ProductListRoute());
+                    }
+                  },
                   contentPadding: const EdgeInsets.all(16),
                   leading: CircleAvatar(
                     backgroundColor: Colors.blue.withOpacity(0.1),
@@ -88,9 +101,6 @@ class _CustomerListScreenState extends ConsumerState<CustomerListScreen> {
                     ),
                   ),
                   trailing: const Icon(Icons.arrow_forward_ios, size: 16, color: Colors.grey),
-                  onTap: () {
-                    // Logic to view or select customer
-                  },
                 ),
               );
             },

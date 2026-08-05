@@ -1,18 +1,20 @@
 import 'package:flutter/material.dart';
 import 'package:auto_route/auto_route.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../../../../core/router/app_router.dart';
 import '../../../../core/utils/snackbar_utils.dart';
+import '../../../orders/presentation/providers/cart_provider.dart';
 
 @RoutePage()
-class DashboardScreen extends StatefulWidget {
+class DashboardScreen extends ConsumerStatefulWidget {
   const DashboardScreen({super.key});
 
   @override
-  State<DashboardScreen> createState() => _DashboardScreenState();
+  ConsumerState<DashboardScreen> createState() => _DashboardScreenState();
 }
 
-class _DashboardScreenState extends State<DashboardScreen> {
+class _DashboardScreenState extends ConsumerState<DashboardScreen> {
   String _userName = 'Salesman';
 
   @override
@@ -104,7 +106,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
                       icon: Icons.people_alt_rounded,
                       color: Colors.blue,
                       onTap: () {
-                        context.router.push(const CustomerListRoute());
+                        context.router.push( CustomerListRoute());
                       },
                     ),
                     _buildDashboardCard(
@@ -118,12 +120,15 @@ class _DashboardScreenState extends State<DashboardScreen> {
                     ),
                     _buildDashboardCard(
                       context,
-                      title: 'New Invoice',
+                      title: 'Create Invoice',
                       icon: Icons.add_shopping_cart_rounded,
                       color: Colors.green,
                       onTap: () {
-                        // TODO: Navigate to Create Invoice
-                        SnackbarUtils.showSuccess(context, 'Create Invoice Coming Soon!');
+                        // Clear any existing cart data before starting a new invoice
+                        ref.read(cartProvider.notifier).clearCart();
+                        
+                        // Start the invoice flow: First select a customer
+                        context.router.push(CustomerListRoute(isSelectionMode: true));
                       },
                     ),
                     _buildDashboardCard(

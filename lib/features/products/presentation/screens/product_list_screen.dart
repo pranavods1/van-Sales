@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:auto_route/auto_route.dart';
 import '../../../../core/router/app_router.dart';
+import '../../../../core/utils/snackbar_utils.dart';
+import '../../../orders/presentation/providers/cart_provider.dart';
 import '../providers/product_provider.dart';
 
 @RoutePage()
@@ -24,6 +26,7 @@ class _ProductListScreenState extends ConsumerState<ProductListScreen> {
   @override
   Widget build(BuildContext context) {
     final productState = ref.watch(productListProvider);
+    final cartState = ref.watch(cartProvider);
 
     return Scaffold(
       appBar: AppBar(
@@ -194,6 +197,23 @@ class _ProductListScreenState extends ConsumerState<ProductListScreen> {
           ),
         ),
       ),
+      floatingActionButton: cartState.selectedCustomer != null
+          ? FloatingActionButton.extended(
+              onPressed: () {
+                if (cartState.items.isEmpty) {
+                  SnackbarUtils.showError(context, 'Cart is empty!');
+                  return;
+                }
+                context.router.push(const CheckoutRoute());
+              },
+              backgroundColor: Colors.blue,
+              icon: const Icon(Icons.shopping_cart, color: Colors.white),
+              label: Text(
+                '${cartState.items.length} Items - ₹${cartState.grandTotal}',
+                style: const TextStyle(color: Colors.white, fontWeight: FontWeight.bold),
+              ),
+            )
+          : null,
     );
   }
 }
