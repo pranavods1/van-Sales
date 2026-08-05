@@ -27,11 +27,9 @@ class CustomerRepositoryImpl implements CustomerRepository {
         throw Exception('Failed to fetch customers');
       }
     } on DioException catch (e) {
-      // 1. Log the exact error for developers in the console
       debugPrint(' [API ERROR] getCustomers DioException: ${e.message}');
       debugPrint(' [API ERROR] Response: ${e.response?.statusCode} ${e.response?.statusMessage}');
       
-      // 2. Throw user-friendly message for the UI
       if (e.response != null) {
         if (e.response!.statusCode == 404) {
           throw Exception('The requested service was not found. Please contact support or try again later.');

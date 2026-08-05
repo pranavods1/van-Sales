@@ -18,7 +18,6 @@ class ApiClient {
       },
     ));
 
-    // Interceptor to add token to requests automatically
     dio.interceptors.add(InterceptorsWrapper(
       onRequest: (options, handler) async {
         final prefs = await SharedPreferences.getInstance();
@@ -30,7 +29,6 @@ class ApiClient {
       },
     ));
 
-    // Logger Interceptor to see Requests and Responses in the Console
     dio.interceptors.add(LogInterceptor(
       request: true,
       requestHeader: true,

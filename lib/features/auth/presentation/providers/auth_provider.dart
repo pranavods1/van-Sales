@@ -3,13 +3,11 @@ import '../../../../core/network/api_client.dart';
 import '../../domain/repositories/auth_repository.dart';
 import '../../data/repositories/auth_repository_impl.dart';
 
-// 1. AuthRepository Provider
 final authRepositoryProvider = Provider<AuthRepository>((ref) {
   final apiClient = ref.watch(apiClientProvider);
   return AuthRepositoryImpl(apiClient);
 });
 
-// 3. Auth Notifier Provider (Strict Riverpod 3.0 Standard)
 final authStateProvider = NotifierProvider<AuthNotifier, AsyncValue<void>>(() {
   return AuthNotifier();
 });
@@ -26,7 +24,6 @@ class AuthNotifier extends Notifier<AsyncValue<void>> {
       final repository = ref.read(authRepositoryProvider);
       final user = await repository.login(email, password);
       
-      // Fetch user details immediately after login to get route_id and van_id
       await repository.getUserDetail(user.id);
       
       state = const AsyncValue.data(null);

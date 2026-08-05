@@ -4,6 +4,7 @@ import '../../../../core/network/api_client.dart';
 import '../../domain/repositories/product_repository.dart';
 import '../models/product_model.dart';
 import '../models/product_detail_model.dart';
+import '../models/product_type_model.dart';
 
 class ProductRepositoryImpl implements ProductRepository {
   final ApiClient apiClient;
@@ -21,7 +22,6 @@ class ProductRepositoryImpl implements ProductRepository {
       );
 
       if (response.data['success'] == true) {
-        // Note: The API returns data inside a pagination object: response.data['data']['data']
         final paginationData = response.data['data'];
         final dataList = paginationData['data'] as List;
         
@@ -91,6 +91,26 @@ class ProductRepositoryImpl implements ProductRepository {
       throw Exception(e.message ?? 'Network error occurred. Please check your internet connection.');
     } catch (e) {
       debugPrint('🔥 [API ERROR] getProductDetail Unknown Exception: $e');
+      throw Exception('An unexpected error occurred. Please try again later.');
+    }
+  }
+
+  @override
+  Future<List<ProductTypeModel>> getProductTypes() async {
+    try {
+      final response = await apiClient.dio.get('/get_product_type');
+      
+      if (response.data['success'] == true) {
+        final List<dynamic> dataList = response.data['data'];
+        return dataList.map((json) => ProductTypeModel.fromJson(json)).toList();
+      } else {
+        throw Exception('Failed to fetch product types');
+      }
+    } on DioException catch (e) {
+      debugPrint('🔥 [API ERROR] getProductTypes DioException: ${e.message}');
+      throw Exception(e.message ?? 'Network error occurred.');
+    } catch (e) {
+      debugPrint('🔥 [API ERROR] getProductTypes Unknown Exception: $e');
       throw Exception('An unexpected error occurred. Please try again later.');
     }
   }

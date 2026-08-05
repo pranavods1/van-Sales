@@ -11,7 +11,6 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    // Create an instance of AppRouter
     final appRouter = AppRouter();
 
     return MaterialApp.router(
