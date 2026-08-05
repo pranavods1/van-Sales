@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:auto_route/auto_route.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import '../../../../core/router/app_router.gr.dart';
+import '../../../../core/router/app_router.dart';
 import '../../../../core/utils/snackbar_utils.dart';
 
 @RoutePage()
@@ -104,8 +104,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
                       icon: Icons.people_alt_rounded,
                       color: Colors.blue,
                       onTap: () {
-                        // TODO: Navigate to Customers List
-                        SnackbarUtils.showSuccess(context, 'Customers Screen Coming Soon!');
+                        context.router.push(const CustomerListRoute());
                       },
                     ),
                     _buildDashboardCard(

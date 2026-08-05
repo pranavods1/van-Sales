@@ -8,59 +8,68 @@
 // ignore_for_file: type=lint
 // coverage:ignore-file
 
-// ignore_for_file: no_leading_underscores_for_library_prefixes
-import 'package:auto_route/auto_route.dart' as _i4;
-import 'package:pranav_mechinetest/features/auth/presentation/screens/login_screen.dart'
-    as _i2;
-import 'package:pranav_mechinetest/features/dashboard/presentation/screens/dashboard_screen.dart'
-    as _i1;
-import 'package:pranav_mechinetest/features/splash/presentation/screens/splash_screen.dart'
-    as _i3;
+part of 'app_router.dart';
 
 /// generated route for
-/// [_i1.DashboardScreen]
-class DashboardRoute extends _i4.PageRouteInfo<void> {
-  const DashboardRoute({List<_i4.PageRouteInfo>? children})
+/// [CustomerListScreen]
+class CustomerListRoute extends PageRouteInfo<void> {
+  const CustomerListRoute({List<PageRouteInfo>? children})
+    : super(CustomerListRoute.name, initialChildren: children);
+
+  static const String name = 'CustomerListRoute';
+
+  static PageInfo page = PageInfo(
+    name,
+    builder: (data) {
+      return const CustomerListScreen();
+    },
+  );
+}
+
+/// generated route for
+/// [DashboardScreen]
+class DashboardRoute extends PageRouteInfo<void> {
+  const DashboardRoute({List<PageRouteInfo>? children})
     : super(DashboardRoute.name, initialChildren: children);
 
   static const String name = 'DashboardRoute';
 
-  static _i4.PageInfo page = _i4.PageInfo(
+  static PageInfo page = PageInfo(
     name,
     builder: (data) {
-      return const _i1.DashboardScreen();
+      return const DashboardScreen();
     },
   );
 }
 
 /// generated route for
-/// [_i2.LoginScreen]
-class LoginRoute extends _i4.PageRouteInfo<void> {
-  const LoginRoute({List<_i4.PageRouteInfo>? children})
+/// [LoginScreen]
+class LoginRoute extends PageRouteInfo<void> {
+  const LoginRoute({List<PageRouteInfo>? children})
     : super(LoginRoute.name, initialChildren: children);
 
   static const String name = 'LoginRoute';
 
-  static _i4.PageInfo page = _i4.PageInfo(
+  static PageInfo page = PageInfo(
     name,
     builder: (data) {
-      return const _i2.LoginScreen();
+      return const LoginScreen();
     },
   );
 }
 
 /// generated route for
-/// [_i3.SplashScreen]
-class SplashRoute extends _i4.PageRouteInfo<void> {
-  const SplashRoute({List<_i4.PageRouteInfo>? children})
+/// [SplashScreen]
+class SplashRoute extends PageRouteInfo<void> {
+  const SplashRoute({List<PageRouteInfo>? children})
     : super(SplashRoute.name, initialChildren: children);
 
   static const String name = 'SplashRoute';
 
-  static _i4.PageInfo page = _i4.PageInfo(
+  static PageInfo page = PageInfo(
     name,
     builder: (data) {
-      return const _i3.SplashScreen();
+      return const SplashScreen();
     },
   );
 }

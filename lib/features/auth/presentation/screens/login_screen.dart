@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:auto_route/auto_route.dart';
 import '../providers/auth_provider.dart';
-import '../../../../core/router/app_router.gr.dart';
+import '../../../../core/router/app_router.dart';
 import '../../../../core/utils/snackbar_utils.dart';
 
 @RoutePage()
