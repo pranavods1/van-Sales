@@ -168,7 +168,10 @@ class _ProductDetailScreenState extends ConsumerState<ProductDetailScreen> {
                         );
                       },
                       loading: () => const Center(child: CircularProgressIndicator()),
-                      error: (err, stack) => Text('Error loading types: $err', style: const TextStyle(color: Colors.red)),
+                      error: (err, stack) {
+                        final cleanError = err.toString().replaceAll('Exception: ', '');
+                        return Text(cleanError, style: const TextStyle(color: Colors.red));
+                      },
                     ),
                   ],
                 ),
@@ -282,10 +285,13 @@ class _ProductDetailScreenState extends ConsumerState<ProductDetailScreen> {
                 padding: EdgeInsets.all(32.0),
                 child: Center(child: CircularProgressIndicator()),
               ),
-              error: (error, stack) => Padding(
-                padding: const EdgeInsets.all(24.0),
-                child: Center(child: Text(error.toString())),
-              ),
+              error: (error, stack) {
+                final cleanError = error.toString().replaceAll('Exception: ', '');
+                return Padding(
+                  padding: const EdgeInsets.all(32.0),
+                  child: Center(child: Text(cleanError, style: const TextStyle(color: Colors.red))),
+                );
+              },
             ),
             const SizedBox(height: 100), // padding for bottom bar
           ],

@@ -107,9 +107,12 @@ class InvoiceListScreen extends ConsumerWidget {
             );
           },
           loading: () => const Center(child: CircularProgressIndicator()),
-          error: (error, stack) => Center(
-            child: Text('Error: $error', style: const TextStyle(color: Colors.red)),
-          ),
+          error: (error, stack) {
+            final cleanError = error.toString().replaceAll('Exception: ', '');
+            return Center(
+              child: Text(cleanError, style: const TextStyle(color: Colors.red, fontSize: 16)),
+            );
+          },
         ),
       ),
     );

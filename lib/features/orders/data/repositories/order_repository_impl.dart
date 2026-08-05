@@ -62,13 +62,18 @@ class OrderRepositoryImpl implements OrderRepository {
       }
       return false;
     } on DioException catch (e) {
+      if (e.response?.statusCode == 404) {
+        throw Exception('Service unavailable (404). Please contact support.');
+      }
       if (e.response?.data != null) {
         final data = e.response!.data;
         if (data is Map<String, dynamic> && data.containsKey('messages')) {
           throw Exception(data['messages'].toString());
         }
       }
-      throw Exception(e.message ?? 'Failed to submit order');
+      throw Exception('Network error while submitting order.');
+    } catch (e) {
+      throw Exception('An unexpected error occurred.');
     }
   }
 
@@ -97,8 +102,13 @@ class OrderRepositoryImpl implements OrderRepository {
         }
       }
       return [];
+    } on DioException catch (e) {
+      if (e.response?.statusCode == 404) {
+        throw Exception('Invoices not found. Please try again later.');
+      }
+      throw Exception('Network error occurred while fetching invoices.');
     } catch (e) {
-      throw Exception('Failed to fetch invoices: $e');
+      throw Exception('An unexpected error occurred.');
     }
   }
 }
