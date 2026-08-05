@@ -25,7 +25,7 @@ class AuthRepositoryImpl implements AuthRepository {
         final token = response.data['authorisation']['token'];
         final prefs = await SharedPreferences.getInstance();
         await prefs.setString('auth_token', token);
-        
+
         // Save user_id for later API calls (Get User Detail, Create Invoice, etc)
         final userJson = response.data['user'];
         await prefs.setInt('user_id', userJson['id']);
@@ -36,7 +36,30 @@ class AuthRepositoryImpl implements AuthRepository {
         throw Exception('Login failed. Please check your credentials.');
       }
     } on DioException catch (e) {
-      throw Exception(e.message ?? 'Network error occurred');
+      // Check for network/connection errors
+      if (e.type == DioExceptionType.connectionTimeout ||
+          e.type == DioExceptionType.receiveTimeout ||
+          e.type == DioExceptionType.connectionError) {
+        throw Exception('No internet connection. Please check your network and try again.');
+      }
+
+      // Handle HTTP errors and show user-friendly messages
+      if (e.response != null) {
+        if (e.response!.statusCode == 401) {
+          throw Exception('Incorrect email or password. Please try again.');
+        }
+
+        if (e.response?.data != null) {
+          final data = e.response!.data;
+          if (data is Map<String, dynamic> && data.containsKey('message')) {
+            throw Exception(data['message']);
+          }
+        }
+      }
+      throw Exception(e.message ??
+          'Network error occurred. Please check your internet connection.');
+    } catch (e) {
+      throw Exception('An unexpected error occurred. Please try again later.');
     }
   }
 }

@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:auto_route/auto_route.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import '../../../../core/router/app_router.gr.dart';
+import '../../../../core/utils/snackbar_utils.dart';
 
 @RoutePage()
 class DashboardScreen extends StatelessWidget {
@@ -15,6 +16,7 @@ class DashboardScreen extends StatelessWidget {
     
     // ലോഗിൻ സ്ക്രീനിലേക്ക് പോകുക (പഴയ സ്ക്രീനുകൾ എല്ലാം റിമൂവ് ചെയ്തുകൊണ്ട്)
     if (context.mounted) {
+      SnackbarUtils.showSuccess(context, 'Logged out successfully');
       context.router.replaceAll([const LoginRoute()]);
     }
   }
