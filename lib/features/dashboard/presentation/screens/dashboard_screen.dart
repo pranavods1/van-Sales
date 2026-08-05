@@ -101,9 +101,16 @@ class _DashboardScreenState extends ConsumerState<DashboardScreen> {
 
   Widget _buildHomeTab() {
     final invoiceState = ref.watch(invoiceListProvider);
-    return Padding(
-      padding: const EdgeInsets.all(20.0),
-      child: Column(
+    return RefreshIndicator(
+      onRefresh: () async {
+        ref.invalidate(invoiceListProvider);
+        // Optionally fetch other things if needed, but invoice list is what they asked for
+      },
+      child: SingleChildScrollView(
+        physics: const AlwaysScrollableScrollPhysics(),
+        child: Padding(
+          padding: const EdgeInsets.all(20.0),
+          child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Column(
@@ -193,14 +200,15 @@ class _DashboardScreenState extends ConsumerState<DashboardScreen> {
           ),
           const SizedBox(height: 16),
           
-          Expanded(
-            child: invoiceState.when(
+          invoiceState.when(
               data: (invoices) {
                 if (invoices.isEmpty) {
                   return const Center(child: Text('No recent invoices found.', style: TextStyle(color: Colors.grey)));
                 }
                 final recent = invoices.take(4).toList();
                 return ListView.builder(
+                  shrinkWrap: true,
+                  physics: const NeverScrollableScrollPhysics(),
                   itemCount: recent.length,
                   itemBuilder: (context, index) {
                     final invoice = recent[index];
@@ -228,8 +236,9 @@ class _DashboardScreenState extends ConsumerState<DashboardScreen> {
               loading: () => const Center(child: CircularProgressIndicator()),
               error: (err, stack) => Center(child: Text(err.toString().replaceAll('Exception: ', ''), style: const TextStyle(color: Colors.red))),
             ),
-          ),
-        ],
+          ],
+        ),
+        ),
       ),
     );
   }

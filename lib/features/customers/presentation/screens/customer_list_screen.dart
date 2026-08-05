@@ -38,7 +38,28 @@ class _CustomerListScreenState extends ConsumerState<CustomerListScreen> {
         foregroundColor: Colors.black87,
         iconTheme: const IconThemeData(color: Colors.black87),
       ),
-      body: customerState.when(
+      body: Column(
+        children: [
+          if (widget.isSelectionMode)
+            Container(
+              padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
+              width: double.infinity,
+              // color: Colors.amber.shade100,
+              child: const Row(
+                children: [
+                  Icon(Icons.info_outline, color: Colors.black87),
+                  SizedBox(width: 8),
+                  Expanded(
+                    child: Text(
+                      'Select a customer to create an invoice',
+                      style: TextStyle(fontWeight: FontWeight.normal, color: Colors.grey),
+                    ),
+                  ),
+                ],
+              ),
+            ),
+          Expanded(
+            child: customerState.when(
         data: (customers) {
           if (customers.isEmpty) {
             return const Center(
@@ -129,6 +150,9 @@ class _CustomerListScreenState extends ConsumerState<CustomerListScreen> {
             ),
           ),
         ),
+      ),
+    ),
+  ],
       ),
     );
   }
