@@ -8,6 +8,7 @@ import '../../features/products/presentation/screens/product_detail_screen.dart'
 import '../../features/splash/presentation/screens/splash_screen.dart';
 import '../../features/auth/presentation/screens/login_screen.dart';
 import '../../features/orders/presentation/screens/checkout_screen.dart';
+import '../../features/orders/presentation/screens/invoice_list_screen.dart';
 
 part 'app_router.gr.dart';
 
@@ -22,5 +23,6 @@ class AppRouter extends RootStackRouter {
         AutoRoute(path: '/products', page: ProductListRoute.page),
         AutoRoute(path: '/product-detail', page: ProductDetailRoute.page),
         AutoRoute(path: '/checkout', page: CheckoutRoute.page),
+        AutoRoute(path: '/invoices', page: InvoiceListRoute.page),
       ];
 }
