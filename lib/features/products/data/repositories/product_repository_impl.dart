@@ -22,7 +22,6 @@ class ProductRepositoryImpl implements ProductRepository {
       );
 
       if (response.data['success'] == true) {
-        // Note: The API returns data inside a pagination object: response.data['data']['data']
         final paginationData = response.data['data'];
         final dataList = paginationData['data'] as List;
         

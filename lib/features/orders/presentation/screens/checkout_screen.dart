@@ -60,7 +60,6 @@ class _CheckoutScreenState extends ConsumerState<CheckoutScreen> {
         if (!mounted) return;
         SnackbarUtils.showSuccess(context, 'Invoice created successfully!');
         ref.read(cartProvider.notifier).clearCart();
-        // Go back to dashboard
         context.router.replaceAll([const DashboardRoute()]);
       }
     } catch (e) {
@@ -116,7 +115,6 @@ class _CheckoutScreenState extends ConsumerState<CheckoutScreen> {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
-            // Customer Info
             if (cartState.selectedCustomer != null)
               Card(
                 shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
@@ -164,7 +162,6 @@ class _CheckoutScreenState extends ConsumerState<CheckoutScreen> {
             ),
             const SizedBox(height: 8),
 
-            // Cart Items
             ListView.builder(
               shrinkWrap: true,
               physics: const NeverScrollableScrollPhysics(),
@@ -251,7 +248,6 @@ class _CheckoutScreenState extends ConsumerState<CheckoutScreen> {
 
             const SizedBox(height: 16),
             
-            // Totals
             Card(
               shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
               child: Padding(

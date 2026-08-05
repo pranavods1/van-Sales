@@ -27,7 +27,6 @@ class OrderRepositoryImpl implements OrderRepository {
       final userId = prefs.getInt('user_id') ?? 0;
       final vanId = prefs.getInt('van_id') ?? 0;
 
-      // Extract parallel arrays
       final List<int> itemIds = items.map((e) => e.product.id).toList();
       final List<int> quantities = items.map((e) => e.quantity).toList();
       final List<double> mrps = items.map((e) => double.tryParse(e.unitDetail.price) ?? 0.0).toList();

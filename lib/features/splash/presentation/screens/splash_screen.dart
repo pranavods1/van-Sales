@@ -21,7 +21,6 @@ class _SplashScreenState extends State<SplashScreen> with SingleTickerProviderSt
   void initState() {
     super.initState();
     
-    // Setup Animations
     _animationController = AnimationController(
       vsync: this,
       duration: const Duration(milliseconds: 1500),
@@ -46,7 +45,6 @@ class _SplashScreenState extends State<SplashScreen> with SingleTickerProviderSt
   }
 
   Future<void> _checkLoginStatus() async {
-    // കാത്തിരിക്കുന്ന സമയം 2.5 സെക്കന്റ് ആക്കാം, അപ്പോൾ ആനിമേഷൻ നന്നായി കാണാം
     await Future.delayed(const Duration(milliseconds: 2500));
     
     final prefs = await SharedPreferences.getInstance();
@@ -66,7 +64,6 @@ class _SplashScreenState extends State<SplashScreen> with SingleTickerProviderSt
     return Scaffold(
       body: Container(
         width: double.infinity,
-        // Premium Gradient Background
         decoration: const BoxDecoration(
           gradient: LinearGradient(
             begin: Alignment.topLeft,
@@ -83,7 +80,6 @@ class _SplashScreenState extends State<SplashScreen> with SingleTickerProviderSt
             children: [
               const SizedBox(height: 40), // Top Spacing
               
-              // Animated Logo & Title
               AnimatedBuilder(
                 animation: _animationController,
                 builder: (context, child) {
@@ -93,7 +89,6 @@ class _SplashScreenState extends State<SplashScreen> with SingleTickerProviderSt
                       scale: _scaleAnimation,
                       child: Column(
                         children: [
-                          // App Icon in a nice white circular container
                           Container(
                             padding: const EdgeInsets.all(24),
                             decoration: BoxDecoration(
@@ -140,7 +135,6 @@ class _SplashScreenState extends State<SplashScreen> with SingleTickerProviderSt
                 },
               ),
               
-              // Loading Indicator and Version Info at the bottom
               Padding(
                 padding: const EdgeInsets.only(bottom: 32.0),
                 child: FadeTransition(

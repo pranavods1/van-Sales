@@ -22,7 +22,6 @@ class _CustomerListScreenState extends ConsumerState<CustomerListScreen> {
   @override
   void initState() {
     super.initState();
-    // Fetch customers as soon as the screen loads
     WidgetsBinding.instance.addPostFrameCallback((_) {
       ref.read(customerListProvider.notifier).fetchCustomers();
     });

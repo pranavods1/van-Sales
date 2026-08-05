@@ -22,7 +22,6 @@ class ProductDetailScreen extends ConsumerStatefulWidget {
 class _ProductDetailScreenState extends ConsumerState<ProductDetailScreen> {
   int _selectedProductType = 1; // 1 = Normal, 2 = FOC, 3 = Change, 4 = Sample
   
-  // Map to store quantities per unit ID
   final Map<int, int> _quantities = {};
 
   void _incrementQty(int unitId) {
@@ -53,7 +52,6 @@ class _ProductDetailScreenState extends ConsumerState<ProductDetailScreen> {
         );
         ref.read(cartProvider.notifier).addItem(cartItem);
         
-        // Reset quantity
         setState(() {
           _quantities[detail.unitId] = 0;
         });
@@ -84,7 +82,6 @@ class _ProductDetailScreenState extends ConsumerState<ProductDetailScreen> {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
-            // 1. Basic Product Info Card
             Container(
               color: Colors.white,
               padding: const EdgeInsets.all(20),
@@ -133,7 +130,6 @@ class _ProductDetailScreenState extends ConsumerState<ProductDetailScreen> {
               ),
             ),
             
-            // Only show Product Type selector if a customer is selected
             if (cartState.selectedCustomer != null)
               Container(
                 color: Colors.white,
@@ -180,7 +176,6 @@ class _ProductDetailScreenState extends ConsumerState<ProductDetailScreen> {
             
             const SizedBox(height: 16),
             
-            // 2. Detailed Units Section
             const Padding(
               padding: EdgeInsets.symmetric(horizontal: 16.0),
               child: Text(
@@ -250,7 +245,6 @@ class _ProductDetailScreenState extends ConsumerState<ProductDetailScreen> {
                               ],
                             ),
                             
-                            // Quantity Controls
                             if (cartState.selectedCustomer != null) ...[
                               const Divider(height: 24),
                               Row(

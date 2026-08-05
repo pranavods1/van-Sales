@@ -7,7 +7,6 @@ import '../../../../core/network/api_client.dart';
 import '../../data/models/product_type_model.dart';
 
 
-// 1. ProductRepository Provider
 final productRepositoryProvider = Provider<ProductRepository>((ref) {
   final apiClient = ref.watch(apiClientProvider);
   return ProductRepositoryImpl(apiClient);
@@ -18,7 +17,6 @@ final productTypeProvider = FutureProvider<List<ProductTypeModel>>((ref) async {
   return await repository.getProductTypes();
 });
 
-// 3. ProductList Notifier Provider
 final productListProvider = NotifierProvider<ProductListNotifier, AsyncValue<List<ProductModel>>>(() {
   return ProductListNotifier();
 });

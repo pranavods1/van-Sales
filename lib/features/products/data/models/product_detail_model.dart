@@ -18,7 +18,6 @@ class ProductDetailModel {
   });
 
   factory ProductDetailModel.fromJson(Map<String, dynamic> json) {
-    // Safely extract the unit name from the nested 'units' array
     String extractedUnitName = 'Unknown';
     if (json['units'] != null && json['units'] is List && (json['units'] as List).isNotEmpty) {
       extractedUnitName = json['units'][0]['name'] ?? 'Unknown';

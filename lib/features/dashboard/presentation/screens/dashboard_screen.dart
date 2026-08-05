@@ -36,7 +36,6 @@ class _DashboardScreenState extends ConsumerState<DashboardScreen> {
     await prefs.remove('user_id');
     await prefs.remove('user_name'); // Clear name too
     
-    // Clear the newly added route details
     await prefs.remove('route_id');
     await prefs.remove('van_id');
     await prefs.remove('store_id');
@@ -72,7 +71,6 @@ class _DashboardScreenState extends ConsumerState<DashboardScreen> {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start, // Top Left Alignment
             children: [
-              // Greeting Section
               Text(
                 'Hello, $_userName 👋',
                 style: const TextStyle(
@@ -92,7 +90,6 @@ class _DashboardScreenState extends ConsumerState<DashboardScreen> {
               ),
               const SizedBox(height: 32),
 
-              // 4-Grid Layout
               Expanded(
                 child: GridView.count(
                   crossAxisCount: 2,
@@ -124,10 +121,8 @@ class _DashboardScreenState extends ConsumerState<DashboardScreen> {
                       icon: Icons.add_shopping_cart_rounded,
                       color: Colors.green,
                       onTap: () {
-                        // Clear any existing cart data before starting a new invoice
                         ref.read(cartProvider.notifier).clearCart();
                         
-                        // Start the invoice flow: First select a customer
                         context.router.push(CustomerListRoute(isSelectionMode: true));
                       },
                     ),
@@ -137,7 +132,6 @@ class _DashboardScreenState extends ConsumerState<DashboardScreen> {
                       icon: Icons.receipt_long_rounded,
                       color: Colors.purple,
                       onTap: () {
-                        // TODO: Navigate to Invoices List
                         SnackbarUtils.showSuccess(context, 'Invoices List Coming Soon!');
                       },
                     ),

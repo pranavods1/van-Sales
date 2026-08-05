@@ -14,8 +14,6 @@ class CartItemModel {
     required this.productType,
   });
 
-  // Calculate the total price for this item (excluding tax, tax is usually calculated globally or per item)
-  // For FOC (Free of cost), the price should effectively be 0, but for now we just store the selected type.
   double get totalPrice {
     if (productType == 2 || productType == 4) { // FOC or Sample
       return 0.0;
@@ -24,7 +22,6 @@ class CartItemModel {
     return price * quantity;
   }
 
-  // Calculate tax for this item
   double get taxAmount {
     if (productType == 2 || productType == 4) {
       return 0.0;

@@ -5,13 +5,11 @@ import '../../domain/repositories/customer_repository.dart';
 import '../../data/repositories/customer_repository_impl.dart';
 import '../../data/models/customer_model.dart';
 
-// 1. CustomerRepository Provider
 final customerRepositoryProvider = Provider<CustomerRepository>((ref) {
   final apiClient = ref.watch(apiClientProvider);
   return CustomerRepositoryImpl(apiClient);
 });
 
-// 3. CustomerList Notifier Provider (Strict Riverpod 3.0 Standard)
 final customerListProvider = NotifierProvider<CustomerListNotifier, AsyncValue<List<CustomerModel>>>(() {
   return CustomerListNotifier();
 });
@@ -19,7 +17,6 @@ final customerListProvider = NotifierProvider<CustomerListNotifier, AsyncValue<L
 class CustomerListNotifier extends Notifier<AsyncValue<List<CustomerModel>>> {
   @override
   AsyncValue<List<CustomerModel>> build() {
-    // Initial state is loading, we can fetch immediately or wait for a fetch call
     return const AsyncValue.loading();
   }
 

@@ -49,8 +49,6 @@ class CartNotifier extends Notifier<CartState> {
   }
 
   void addItem(CartItemModel item) {
-    // Check if the exact product with exact unit and type is already in cart,
-    // if so, just increase quantity.
     final existingIndex = state.items.indexWhere((element) => 
       element.product.id == item.product.id && 
       element.unitDetail.unitId == item.unitDetail.unitId &&
