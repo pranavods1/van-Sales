@@ -5,14 +5,9 @@ import '../../domain/repositories/customer_repository.dart';
 import '../../data/repositories/customer_repository_impl.dart';
 import '../../data/models/customer_model.dart';
 
-// 1. ApiClient Provider (can be shared, but redefined here for simplicity if needed, better to use a global one but this works)
-final customerApiClientProvider = Provider<ApiClient>((ref) {
-  return ApiClient();
-});
-
-// 2. CustomerRepository Provider
+// 1. CustomerRepository Provider
 final customerRepositoryProvider = Provider<CustomerRepository>((ref) {
-  final apiClient = ref.watch(customerApiClientProvider);
+  final apiClient = ref.watch(apiClientProvider);
   return CustomerRepositoryImpl(apiClient);
 });
 

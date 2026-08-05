@@ -3,12 +3,7 @@ import '../../../../core/network/api_client.dart';
 import '../../domain/repositories/auth_repository.dart';
 import '../../data/repositories/auth_repository_impl.dart';
 
-// 1. ApiClient Provider
-final apiClientProvider = Provider<ApiClient>((ref) {
-  return ApiClient();
-});
-
-// 2. AuthRepository Provider
+// 1. AuthRepository Provider
 final authRepositoryProvider = Provider<AuthRepository>((ref) {
   final apiClient = ref.watch(apiClientProvider);
   return AuthRepositoryImpl(apiClient);

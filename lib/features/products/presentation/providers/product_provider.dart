@@ -6,14 +6,9 @@ import 'package:shared_preferences/shared_preferences.dart';
 import '../../../../core/network/api_client.dart';
 
 
-// 1. ApiClient Provider
-final productApiClientProvider = Provider<ApiClient>((ref) {
-  return ApiClient();
-});
-
-// 2. ProductRepository Provider
+// 1. ProductRepository Provider
 final productRepositoryProvider = Provider<ProductRepository>((ref) {
-  final apiClient = ref.watch(productApiClientProvider);
+  final apiClient = ref.watch(apiClientProvider);
   return ProductRepositoryImpl(apiClient);
 });
 

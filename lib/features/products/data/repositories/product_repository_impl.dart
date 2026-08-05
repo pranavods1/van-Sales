@@ -3,6 +3,7 @@ import 'package:dio/dio.dart';
 import '../../../../core/network/api_client.dart';
 import '../../domain/repositories/product_repository.dart';
 import '../models/product_model.dart';
+import '../models/product_detail_model.dart';
 
 class ProductRepositoryImpl implements ProductRepository {
   final ApiClient apiClient;
@@ -49,6 +50,47 @@ class ProductRepositoryImpl implements ProductRepository {
       throw Exception(e.message ?? 'Network error occurred. Please check your internet connection.');
     } catch (e) {
       debugPrint('🔥 [API ERROR] getProducts Unknown Exception: $e');
+      throw Exception('An unexpected error occurred. Please try again later.');
+    }
+  }
+
+  @override
+  Future<List<ProductDetailModel>> getProductDetail(int productId) async {
+    try {
+      final response = await apiClient.dio.get(
+        '/get_product_detail',
+        data: {
+          'product_id': productId.toString(),
+        },
+      );
+
+      if (response.data['success'] == true) {
+        final dataList = response.data['data'] as List;
+        return dataList.map((json) => ProductDetailModel.fromJson(json)).toList();
+      } else {
+        throw Exception('Failed to fetch product details');
+      }
+    } on DioException catch (e) {
+      debugPrint('🔥 [API ERROR] getProductDetail DioException: ${e.message}');
+      debugPrint('🔥 [API ERROR] Response: ${e.response?.statusCode} ${e.response?.statusMessage}');
+      
+      if (e.response != null) {
+        if (e.response!.statusCode == 404) {
+          throw Exception('The requested service was not found. Please contact support or try again later.');
+        }
+        if (e.response!.statusCode == 500) {
+          throw Exception('Internal server error. Please try again later.');
+        }
+      }
+      
+      if (e.type == DioExceptionType.connectionTimeout ||
+          e.type == DioExceptionType.receiveTimeout ||
+          e.type == DioExceptionType.connectionError) {
+        throw Exception('No internet connection. Please check your network and try again.');
+      }
+      throw Exception(e.message ?? 'Network error occurred. Please check your internet connection.');
+    } catch (e) {
+      debugPrint('🔥 [API ERROR] getProductDetail Unknown Exception: $e');
       throw Exception('An unexpected error occurred. Please try again later.');
     }
   }

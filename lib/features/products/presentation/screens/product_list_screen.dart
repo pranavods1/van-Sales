@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:auto_route/auto_route.dart';
+import '../../../../core/router/app_router.dart';
 import '../providers/product_provider.dart';
 
 @RoutePage()
@@ -47,13 +48,17 @@ class _ProductListScreenState extends ConsumerState<ProductListScreen> {
             itemCount: products.length,
             itemBuilder: (context, index) {
               final product = products[index];
-              return Card(
-                elevation: 3,
-                margin: const EdgeInsets.only(bottom: 16),
-                shadowColor: Colors.blue.withValues(alpha: 0.1),
-                shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
-                child: Padding(
-                  padding: const EdgeInsets.all(16.0),
+              return GestureDetector(
+                onTap: () {
+                  context.router.push(ProductDetailRoute(product: product));
+                },
+                child: Card(
+                  elevation: 3,
+                  margin: const EdgeInsets.only(bottom: 16),
+                  shadowColor: Colors.blue.withValues(alpha: 0.1),
+                  shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
+                  child: Padding(
+                    padding: const EdgeInsets.all(16.0),
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
@@ -159,6 +164,7 @@ class _ProductListScreenState extends ConsumerState<ProductListScreen> {
                       ),
                     ],
                   ),
+                ),
                 ),
               );
             },

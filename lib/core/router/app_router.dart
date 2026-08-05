@@ -1,7 +1,10 @@
+import 'package:flutter/material.dart';
 import 'package:auto_route/auto_route.dart';
 import '../../features/dashboard/presentation/screens/dashboard_screen.dart';
 import '../../features/customers/presentation/screens/customer_list_screen.dart';
+import '../../features/products/data/models/product_model.dart';
 import '../../features/products/presentation/screens/product_list_screen.dart';
+import '../../features/products/presentation/screens/product_detail_screen.dart';
 import '../../features/splash/presentation/screens/splash_screen.dart';
 import '../../features/auth/presentation/screens/login_screen.dart';
 
@@ -21,5 +24,7 @@ class AppRouter extends RootStackRouter {
         AutoRoute(path: '/customers', page: CustomerListRoute.page),
         // Product List സ്ക്രീൻ
         AutoRoute(path: '/products', page: ProductListRoute.page),
+        // Product Detail സ്ക്രീൻ
+        AutoRoute(path: '/product-detail', page: ProductDetailRoute.page),
       ];
 }
