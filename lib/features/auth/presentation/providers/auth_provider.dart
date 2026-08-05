@@ -29,7 +29,11 @@ class AuthNotifier extends Notifier<AsyncValue<void>> {
     state = const AsyncValue.loading();
     try {
       final repository = ref.read(authRepositoryProvider);
-      await repository.login(email, password);
+      final user = await repository.login(email, password);
+      
+      // Fetch user details immediately after login to get route_id and van_id
+      await repository.getUserDetail(user.id);
+      
       state = const AsyncValue.data(null);
       return true; // Success
     } catch (e, st) {

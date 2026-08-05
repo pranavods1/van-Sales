@@ -2,7 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:auto_route/auto_route.dart';
 import '../providers/auth_provider.dart';
-import '../../../../core/router/app_router.gr.dart';
+import '../../../../core/router/app_router.dart';
+import '../../../../core/utils/snackbar_utils.dart';
 
 @RoutePage()
 class LoginScreen extends ConsumerStatefulWidget {
@@ -13,8 +14,9 @@ class LoginScreen extends ConsumerStatefulWidget {
 }
 
 class _LoginScreenState extends ConsumerState<LoginScreen> {
-  final _emailController = TextEditingController();
-  final _passwordController = TextEditingController();
+  final _formKey = GlobalKey<FormState>();
+  final _emailController = TextEditingController(text: 'sales@shop.com');
+  final _passwordController = TextEditingController(text: '12345678');
   bool _obscurePassword = true;
 
   @override
@@ -28,33 +30,26 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
     // Unfocus keyboard
     FocusScope.of(context).unfocus();
 
-    final email = _emailController.text.trim();
-    final password = _passwordController.text.trim();
-
-    if (email.isEmpty || password.isEmpty) {
-      ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(content: Text('Please enter email and password')),
-      );
+    if (!_formKey.currentState!.validate()) {
       return;
     }
+
+    final email = _emailController.text.trim();
+    final password = _passwordController.text.trim();
 
     // Call the notifier function
     final success = await ref.read(authStateProvider.notifier).login(email, password);
     
     if (success) {
       if (mounted) {
-        ScaffoldMessenger.of(context).showSnackBar(
-          const SnackBar(content: Text('Login Successful! 🎉')),
-        );
+        SnackbarUtils.showSuccess(context, 'Login Successful! 🎉');
         // Navigate to Dashboard
         context.router.replace(const DashboardRoute());
       }
     } else {
       if (mounted) {
-        final errorMsg = ref.read(authStateProvider).error.toString();
-        ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(content: Text('Failed: $errorMsg')),
-        );
+        final errorMsg = ref.read(authStateProvider).error.toString().replaceAll('Exception: ', '');
+        SnackbarUtils.showError(context, errorMsg);
       }
     }
   }
@@ -71,86 +66,108 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
         child: Center(
           child: SingleChildScrollView(
             padding: const EdgeInsets.symmetric(horizontal: 24.0),
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              crossAxisAlignment: CrossAxisAlignment.stretch,
-              children: [
-                // App Logo or Icon
-                const Icon(
-                  Icons.local_shipping,
-                  size: 100,
-                  color: Colors.amber,
-                ),
-                const SizedBox(height: 24),
-                
-                // Welcome Text
-                const Text(
-                  'Van Sales',
-                  textAlign: TextAlign.center,
-                  style: TextStyle(
-                    fontSize: 32,
-                    fontWeight: FontWeight.bold,
-                    color: Colors.black87,
+            child: Form(
+              key: _formKey,
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                crossAxisAlignment: CrossAxisAlignment.stretch,
+                children: [
+                  // App Logo or Icon
+                  const Icon(
+                    Icons.local_shipping,
+                    size: 100,
+                    color: Colors.amber,
                   ),
-                ),
-                const SizedBox(height: 8),
-                const Text(
-                  'Login to continue',
-                  textAlign: TextAlign.center,
-                  style: TextStyle(
-                    fontSize: 16,
-                    color: Colors.black54,
-                  ),
-                ),
-                const SizedBox(height: 48),
-
-                // Email Field
-                TextField(
-                  controller: _emailController,
-                  keyboardType: TextInputType.emailAddress,
-                  enabled: !isLoading,
-                  decoration: InputDecoration(
-                    labelText: 'Email',
-                    prefixIcon: const Icon(Icons.email_outlined, color: Colors.amber),
-                    border: OutlineInputBorder(
-                      borderRadius: BorderRadius.circular(12),
-                    ),
-                    focusedBorder: OutlineInputBorder(
-                      borderRadius: BorderRadius.circular(12),
-                      borderSide: const BorderSide(color: Colors.amber, width: 2),
+                  const SizedBox(height: 24),
+                  
+                  // Welcome Text
+                  const Text(
+                    'Van Sales',
+                    textAlign: TextAlign.center,
+                    style: TextStyle(
+                      fontSize: 32,
+                      fontWeight: FontWeight.bold,
+                      color: Colors.black87,
                     ),
                   ),
-                ),
-                const SizedBox(height: 16),
+                  const SizedBox(height: 8),
+                  const Text(
+                    'Login to continue',
+                    textAlign: TextAlign.center,
+                    style: TextStyle(
+                      fontSize: 16,
+                      color: Colors.black54,
+                    ),
+                  ),
+                  const SizedBox(height: 48),
 
-                // Password Field
-                TextField(
-                  controller: _passwordController,
-                  obscureText: _obscurePassword,
-                  enabled: !isLoading,
-                  decoration: InputDecoration(
-                    labelText: 'Password',
-                    prefixIcon: const Icon(Icons.lock_outline, color: Colors.amber),
-                    suffixIcon: IconButton(
-                      icon: Icon(
-                        _obscurePassword ? Icons.visibility_off : Icons.visibility,
-                        color: Colors.grey,
+                  // Email Field
+                  TextFormField(
+                    controller: _emailController,
+                    keyboardType: TextInputType.emailAddress,
+                    enabled: !isLoading,
+                    validator: (value) {
+                      if (value == null || value.trim().isEmpty) {
+                        return 'Please enter your email';
+                      }
+                      // Simple email regex
+                      final emailRegex = RegExp(r'^[^@]+@[^@]+\.[^@]+');
+                      if (!emailRegex.hasMatch(value.trim())) {
+                        return 'Please enter a valid email';
+                      }
+                      return null;
+                    },
+                    decoration: InputDecoration(
+                      labelText: 'Email',
+                      prefixIcon: const Icon(Icons.email_outlined, color: Colors.amber),
+                      border: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(12),
                       ),
-                      onPressed: () {
-                        setState(() {
-                          _obscurePassword = !_obscurePassword;
-                        });
-                      },
-                    ),
-                    border: OutlineInputBorder(
-                      borderRadius: BorderRadius.circular(12),
-                    ),
-                    focusedBorder: OutlineInputBorder(
-                      borderRadius: BorderRadius.circular(12),
-                      borderSide: const BorderSide(color: Colors.amber, width: 2),
+                      focusedBorder: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(12),
+                        borderSide: const BorderSide(color: Colors.amber, width: 2),
+                      ),
                     ),
                   ),
-                ),
+                  const SizedBox(height: 16),
+
+                  // Password Field
+                  TextFormField(
+                    controller: _passwordController,
+                    obscureText: _obscurePassword,
+                    enabled: !isLoading,
+                    validator: (value) {
+                      if (value == null || value.isEmpty) {
+                        return 'Please enter your password';
+                      }
+                      if (value.length < 6) {
+                        return 'Password must be at least 6 characters';
+                      }
+                      return null;
+                    },
+                    decoration: InputDecoration(
+                      labelText: 'Password',
+                      prefixIcon: const Icon(Icons.lock_outline, color: Colors.amber),
+                      suffixIcon: IconButton(
+                        icon: Icon(
+                          _obscurePassword ? Icons.visibility_off : Icons.visibility,
+                          color: Colors.grey,
+                        ),
+                        onPressed: () {
+                          setState(() {
+                            _obscurePassword = !_obscurePassword;
+                          });
+                        },
+                      ),
+                      border: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(12),
+                      ),
+                      focusedBorder: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(12),
+                        borderSide: const BorderSide(color: Colors.amber, width: 2),
+                      ),
+                    ),
+                  ),
                 const SizedBox(height: 32),
 
                 // Login Button
@@ -187,9 +204,10 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
                         letterSpacing: 1.2,
                       ),
                     ),
+                    ),
                   ),
-                ),
-              ],
+                ],
+              ),
             ),
           ),
         ),
