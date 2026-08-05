@@ -1,5 +1,10 @@
 import 'package:dio/dio.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+
+final apiClientProvider = Provider<ApiClient>((ref) {
+  return ApiClient();
+});
 
 class ApiClient {
   static const String baseUrl = 'http://142.93.214.133:3641/api';
@@ -13,7 +18,6 @@ class ApiClient {
       },
     ));
 
-    // Interceptor to add token to requests automatically
     dio.interceptors.add(InterceptorsWrapper(
       onRequest: (options, handler) async {
         final prefs = await SharedPreferences.getInstance();
@@ -25,7 +29,6 @@ class ApiClient {
       },
     ));
 
-    // Logger Interceptor to see Requests and Responses in the Console
     dio.interceptors.add(LogInterceptor(
       request: true,
       requestHeader: true,

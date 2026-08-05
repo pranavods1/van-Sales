@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:auto_route/auto_route.dart';
 import '../providers/auth_provider.dart';
-import '../../../../core/router/app_router.gr.dart';
+import '../../../../core/router/app_router.dart';
 import '../../../../core/utils/snackbar_utils.dart';
 
 @RoutePage()
@@ -15,8 +15,8 @@ class LoginScreen extends ConsumerStatefulWidget {
 
 class _LoginScreenState extends ConsumerState<LoginScreen> {
   final _formKey = GlobalKey<FormState>();
-  final _emailController = TextEditingController(text: 'sales@shop.com');
-  final _passwordController = TextEditingController(text: '12345678');
+  final _emailController = TextEditingController();
+  final _passwordController = TextEditingController();
   bool _obscurePassword = true;
 
   @override
@@ -27,7 +27,6 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
   }
 
   void _handleLogin() async {
-    // Unfocus keyboard
     FocusScope.of(context).unfocus();
 
     if (!_formKey.currentState!.validate()) {
@@ -37,13 +36,11 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
     final email = _emailController.text.trim();
     final password = _passwordController.text.trim();
 
-    // Call the notifier function
     final success = await ref.read(authStateProvider.notifier).login(email, password);
     
     if (success) {
       if (mounted) {
         SnackbarUtils.showSuccess(context, 'Login Successful! 🎉');
-        // Navigate to Dashboard
         context.router.replace(const DashboardRoute());
       }
     } else {
@@ -56,7 +53,6 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
 
   @override
   Widget build(BuildContext context) {
-    // Watch the state to show loading indicator
     final authState = ref.watch(authStateProvider);
     final isLoading = authState.isLoading;
 
@@ -72,7 +68,6 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
                 mainAxisAlignment: MainAxisAlignment.center,
                 crossAxisAlignment: CrossAxisAlignment.stretch,
                 children: [
-                  // App Logo or Icon
                   const Icon(
                     Icons.local_shipping,
                     size: 100,
@@ -80,7 +75,6 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
                   ),
                   const SizedBox(height: 24),
                   
-                  // Welcome Text
                   const Text(
                     'Van Sales',
                     textAlign: TextAlign.center,
@@ -101,7 +95,6 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
                   ),
                   const SizedBox(height: 48),
 
-                  // Email Field
                   TextFormField(
                     controller: _emailController,
                     keyboardType: TextInputType.emailAddress,
@@ -110,7 +103,6 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
                       if (value == null || value.trim().isEmpty) {
                         return 'Please enter your email';
                       }
-                      // Simple email regex
                       final emailRegex = RegExp(r'^[^@]+@[^@]+\.[^@]+');
                       if (!emailRegex.hasMatch(value.trim())) {
                         return 'Please enter a valid email';
@@ -131,7 +123,6 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
                   ),
                   const SizedBox(height: 16),
 
-                  // Password Field
                   TextFormField(
                     controller: _passwordController,
                     obscureText: _obscurePassword,
@@ -170,7 +161,6 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
                   ),
                 const SizedBox(height: 32),
 
-                // Login Button
                 ElevatedButton(
                   onPressed: authState.isLoading ? null : _handleLogin,
                   style: ElevatedButton.styleFrom(

@@ -29,6 +29,7 @@ class SnackbarUtils {
   }
 
   static void showError(BuildContext context, String message) {
+    final cleanMessage = message.replaceAll('Exception: ', '');
     ScaffoldMessenger.of(context).hideCurrentSnackBar();
     ScaffoldMessenger.of(context).showSnackBar(
       SnackBar(
@@ -38,7 +39,7 @@ class SnackbarUtils {
             const SizedBox(width: 12),
             Expanded(
               child: Text(
-                message,
+                cleanMessage,
                 style: const TextStyle(color: Colors.white, fontWeight: FontWeight.bold),
               ),
             ),
