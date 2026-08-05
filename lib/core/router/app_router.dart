@@ -1,6 +1,7 @@
 import 'package:auto_route/auto_route.dart';
 import '../../features/dashboard/presentation/screens/dashboard_screen.dart';
 import '../../features/customers/presentation/screens/customer_list_screen.dart';
+import '../../features/products/presentation/screens/product_list_screen.dart';
 import '../../features/splash/presentation/screens/splash_screen.dart';
 import '../../features/auth/presentation/screens/login_screen.dart';
 
@@ -18,5 +19,7 @@ class AppRouter extends RootStackRouter {
         AutoRoute(path: '/dashboard', page: DashboardRoute.page),
         // Customer List സ്ക്രീൻ
         AutoRoute(path: '/customers', page: CustomerListRoute.page),
+        // Product List സ്ക്രീൻ
+        AutoRoute(path: '/products', page: ProductListRoute.page),
       ];
 }

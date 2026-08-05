@@ -113,8 +113,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
                       icon: Icons.inventory_2_rounded,
                       color: Colors.orange,
                       onTap: () {
-                        // TODO: Navigate to Products List
-                        SnackbarUtils.showSuccess(context, 'Products Screen Coming Soon!');
+                        context.router.push(const ProductListRoute());
                       },
                     ),
                     _buildDashboardCard(
