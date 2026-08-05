@@ -1,5 +1,10 @@
 import 'package:dio/dio.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+
+final apiClientProvider = Provider<ApiClient>((ref) {
+  return ApiClient();
+});
 
 class ApiClient {
   static const String baseUrl = 'http://142.93.214.133:3641/api';
