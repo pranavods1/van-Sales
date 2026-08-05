@@ -4,6 +4,7 @@ import 'package:auto_route/auto_route.dart';
 import '../../data/models/product_model.dart';
 import '../../data/models/product_detail_model.dart';
 import '../providers/product_detail_provider.dart';
+import '../providers/product_provider.dart';
 import '../../../orders/presentation/providers/cart_provider.dart';
 import '../../../orders/data/models/cart_item_model.dart';
 import '../../../../core/utils/snackbar_utils.dart';
@@ -146,30 +147,32 @@ class _ProductDetailScreenState extends ConsumerState<ProductDetailScreen> {
                       style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
                     ),
                     const SizedBox(height: 8),
-                    Wrap(
-                      spacing: 8,
-                      children: [
-                        ChoiceChip(
-                          label: const Text('Normal'),
-                          selected: _selectedProductType == 1,
-                          onSelected: (val) => setState(() => _selectedProductType = 1),
-                        ),
-                        ChoiceChip(
-                          label: const Text('FOC'),
-                          selected: _selectedProductType == 2,
-                          onSelected: (val) => setState(() => _selectedProductType = 2),
-                        ),
-                        ChoiceChip(
-                          label: const Text('Change'),
-                          selected: _selectedProductType == 3,
-                          onSelected: (val) => setState(() => _selectedProductType = 3),
-                        ),
-                        ChoiceChip(
-                          label: const Text('Sample'),
-                          selected: _selectedProductType == 4,
-                          onSelected: (val) => setState(() => _selectedProductType = 4),
-                        ),
-                      ],
+                    ref.watch(productTypeProvider).when(
+                      data: (types) {
+                        if (types.isEmpty) {
+                          return const Text('No product types found');
+                        }
+                        return DropdownButtonFormField<int>(
+                          value: _selectedProductType,
+                          decoration: const InputDecoration(
+                            border: OutlineInputBorder(),
+                            contentPadding: EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+                          ),
+                          items: types.map<DropdownMenuItem<int>>((type) {
+                            return DropdownMenuItem<int>(
+                              value: type.id,
+                              child: Text(type.name),
+                            );
+                          }).toList(),
+                          onChanged: (val) {
+                            if (val != null) {
+                              setState(() => _selectedProductType = val);
+                            }
+                          },
+                        );
+                      },
+                      loading: () => const Center(child: CircularProgressIndicator()),
+                      error: (err, stack) => Text('Error loading types: $err', style: const TextStyle(color: Colors.red)),
                     ),
                   ],
                 ),

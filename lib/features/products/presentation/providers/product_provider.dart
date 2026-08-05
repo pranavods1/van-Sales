@@ -4,12 +4,18 @@ import 'package:pranav_mechinetest/features/products/data/repositories/product_r
 import 'package:pranav_mechinetest/features/products/domain/repositories/product_repository.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import '../../../../core/network/api_client.dart';
+import '../../data/models/product_type_model.dart';
 
 
 // 1. ProductRepository Provider
 final productRepositoryProvider = Provider<ProductRepository>((ref) {
   final apiClient = ref.watch(apiClientProvider);
   return ProductRepositoryImpl(apiClient);
+});
+
+final productTypeProvider = FutureProvider<List<ProductTypeModel>>((ref) async {
+  final repository = ref.watch(productRepositoryProvider);
+  return await repository.getProductTypes();
 });
 
 // 3. ProductList Notifier Provider
